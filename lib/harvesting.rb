@@ -44,6 +44,7 @@ class OaiHarvester
   end
   
   def harvest(repo,metadata_format,limit,fresh_harvest=true)
+    @logger.info("Harvesting #{metadata_format.prefix} records from repo: '#{repo.name}'....")
     begin
       harvest_count = 0
       if(fresh_harvest) then

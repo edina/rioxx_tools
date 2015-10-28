@@ -1,5 +1,6 @@
 reset_all_data: true
 log_level: debug
+db_log_level: error
 data_dir_path: ""
 web_report_data_dir_path: ""
 repo_list_from_opendoar_api_uri: "http://opendoar.org/api13.php?co=gb&show=max&sort=rname"

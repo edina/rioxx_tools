@@ -20,7 +20,7 @@ class RioxxCheckerConfigurator
 		@web_report_data_dir_path = @configuration['web_report_data_dir_path']
 		@repo_list_from_opendoar_api_uri = @configuration['repo_list_from_opendoar_api_uri']
 		@sqlite_db_path = @configuration['sqlite_db_path']
-		@sample_harvest_size = sample_harvest_size
+		@sample_harvest_size = @configuration['sample_harvest_size']
 		case @configuration['log_level']
 		when 'debug'
 			@logger.level = Logger::DEBUG
@@ -36,7 +36,7 @@ class RioxxCheckerConfigurator
 			@logger.level = Logger::INFO
 		end
 		@logger.debug("Configuration read successfully from file at '#{yaml_file_path}'")
-		DataMapper::Logger.new($stdout,@configuration['log_level'].to_sym)
+		DataMapper::Logger.new($stdout,@configuration['db_log_level'].to_sym)
 		DataMapper::Model.raise_on_save_failure = true
 		DataMapper::Property::String.length(255)
 		DataMapper.setup(:default,"sqlite://#{@data_dir_path}/rioxx_checker.db")
