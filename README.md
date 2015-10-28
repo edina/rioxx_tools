@@ -8,7 +8,7 @@ This code consists of a set of libraries written in Ruby, and a simple command l
 * validates each record against a set of encoded rules
 * writes a report (in YAML format) which is designed to be processed by [Middleman](https://middlemanapp.com), a static web-site generator
 
-An example of this report produced can be seen on the [RIOXX implementations page](http://rioxx.net/implementation/)
+**This code is used to generate the report on the [RIOXX implementations page](http://rioxx.net/implementation/)**
 
 ## Caveats
 this software is:
@@ -16,6 +16,7 @@ this software is:
 * not designed to scale - it is built to operate on small samples
 * mainly intended to provide a measure of automated testing, to offer feedback to implementers
 * not particularly robust in network operations - no retries for example
+* not being actively developed - it is provided primarily for 
 
 ## Dependencies
 
