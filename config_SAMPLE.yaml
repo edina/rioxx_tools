@@ -1,0 +1,6 @@
+reset_all_data: true
+log_level: debug
+data_dir_path: ""
+web_report_data_dir_path: ""
+repo_list_from_opendoar_api_uri: "http://opendoar.org/api13.php?co=gb&show=max&sort=rname"
+sample_harvest_size: 10

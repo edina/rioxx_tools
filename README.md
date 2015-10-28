@@ -8,10 +8,8 @@ This is a quick and dirty validation script
 # Dependencies
 
 ## Libraries
-* libxml
-* DataMapper
-* OAI
-* Nokogiri
+(see the Gemfile for dependencies on 3rd-party Ruby libraries (gems))
+
 
 ## External services
 * [OpenDOAR](http://www.opendoar.org)

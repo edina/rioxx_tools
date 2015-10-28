@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+gem 'libxml-ruby'
+gem 'data_mapper'
+gem 'dm-sqlite-adapter'
+gem 'oai'
+gem 'iso_codes'
+gem 'mime-types'
