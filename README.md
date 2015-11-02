@@ -6,7 +6,7 @@ This code consists of a set of libraries written in Ruby, and a simple command l
 * discovers those repositories which declare support for RIOXX
 * harvests sample records from those repositories
 * validates each record against a set of encoded rules
-* writes a report (in YAML format) which is designed to be processed by [Middleman](https://middlemanapp.com), a static web-site generator
+* writes a report (in JSON format) which is designed to be processed by [Hugo](https://gohugo.io), a static web-site generator
 
 **This code is used to generate the report on the [RIOXX implementations page](http://rioxx.net/implementation/)**
 

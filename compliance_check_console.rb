@@ -39,7 +39,7 @@ end
 
 def do_web_report(config,registry,metadata_format,logger)
   report = WebReport.new(logger)
-  report.generate_registry_yaml_for_web_report(metadata_format,config.registry_yaml_for_web_report_file_path)
+  report.generate_repo_content_files(metadata_format,config.web_report_content_dir_path)
   report.generate_universal_validation_summary_by_property(config.universal_validation_summary_by_property_report_file_path)
   registry.repos_supporting_metadata_format(metadata_format.prefix).each do |repo|
     report.generate_report_data_for_repo(repo,config.repo_check_data_dir_path)

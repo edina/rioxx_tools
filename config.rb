@@ -10,7 +10,7 @@ require './lib/model'
 # ]
 
 class RioxxCheckerConfigurator
-	attr_reader :reset_all_data,:configuration,:data_dir_path,:web_report_data_dir_path,:repo_list_from_opendoar_api_uri,:sample_harvest_size
+	attr_reader :reset_all_data,:configuration,:data_dir_path,:web_report_data_dir_path,:web_report_content_dir_path,:repo_list_from_opendoar_api_uri,:sample_harvest_size
 
 	def initialize(yaml_file_path,logger)
 		@logger = logger
@@ -18,6 +18,7 @@ class RioxxCheckerConfigurator
 		@reset_all_data = @configuration['reset_all_data']
 		@data_dir_path = @configuration['data_dir_path']
 		@web_report_data_dir_path = @configuration['web_report_data_dir_path']
+		@web_report_content_dir_path = @configuration['web_report_content_dir_path']
 		@repo_list_from_opendoar_api_uri = @configuration['repo_list_from_opendoar_api_uri']
 		@sqlite_db_path = @configuration['sqlite_db_path']
 		@sample_harvest_size = @configuration['sample_harvest_size']
@@ -50,12 +51,8 @@ class RioxxCheckerConfigurator
 		@logger.info("Configured successfully with '#{yaml_file_path}'")
 	end
 
-	def registry_yaml_for_web_report_file_path
-		return "#{@web_report_data_dir_path}/rioxx_enabled_repositories.yaml"
-	end
-
 	def universal_validation_summary_by_property_report_file_path
-		return "#{@web_report_data_dir_path}/universal_validation_summary_by_property.yaml"
+		return "#{@web_report_data_dir_path}/universal_validation_summary_by_property.json"
 	end
 
 	def repo_check_data_dir_path

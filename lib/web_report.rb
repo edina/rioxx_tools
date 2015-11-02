@@ -1,5 +1,6 @@
 require './lib/model'
 require 'yaml'
+require 'json'
 
 class WebReport
   
@@ -11,43 +12,49 @@ class WebReport
     return repo_name.gsub(/[\s\/:,.]/,'_').downcase
   end
   
-  def generate_registry_yaml_for_web_report(metadata_format,registry_yaml_file_path)
-    output_file = nil
+  def generate_repo_content_files(metadata_format,web_report_content_dir_path)
     begin
       data = Array.new
       metadata_format.repositories.each do |repo|
         repo_hash = Hash.new
-        repo_hash['name'] = repo.name
+        repo_hash['title'] = repo.name
+        repo_hash['draft'] = false
+        repo_hash['date'] = Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z')
         repo_hash['base_url'] = repo.base_url.to_s
         repo_hash['opendoar_id'] = repo.id
         repo_hash['software_name'] = repo.software_name
         repo_hash['software_version'] = repo.software_version
         repo_hash['file_name'] = WebReport.generate_url_and_file_safe_repository_name(repo.name)
+        repo_hash['sample_size'] = repo.repository_records.size
         repo_hash['validation_scheme_reports'] = {}
         repo.repository_records.each do |rec|
           rec.validation_events.each do |event|
-            if !repo_hash['validation_scheme_reports'].has_key?(event.validation_scheme.id) then
-              repo_hash['validation_scheme_reports'][event.validation_scheme.id] = Hash.new
-              repo_hash['validation_scheme_reports'][event.validation_scheme.id]['records'] = 0
-              repo_hash['validation_scheme_reports'][event.validation_scheme.id]['valid'] = 0
+            ## horrible intervention to get around fact that yaml doens't like hyphens in keys
+            validation_scheme_name = event.validation_scheme.id.gsub(/-/,'_')
+            if !repo_hash['validation_scheme_reports'].has_key?(validation_scheme_name) then
+              repo_hash['validation_scheme_reports'][validation_scheme_name] = Hash.new
+              repo_hash['validation_scheme_reports'][validation_scheme_name]['records'] = 0
+              repo_hash['validation_scheme_reports'][validation_scheme_name]['valid'] = 0
             end
-            repo_hash['validation_scheme_reports'][event.validation_scheme.id]['records'] += 1
+            repo_hash['validation_scheme_reports'][validation_scheme_name]['records'] += 1
             if event.valid then
-              repo_hash['validation_scheme_reports'][event.validation_scheme.id]['valid'] += 1
+              repo_hash['validation_scheme_reports'][validation_scheme_name]['valid'] += 1
             end
           end
         end
         repo_hash['validation_scheme_reports'].each_value do |validation_scheme_report|
           validation_scheme_report['percentage_valid'] = (validation_scheme_report['valid'].to_f / validation_scheme_report['records'].to_f * 100.0).round(0)
         end
+        content_file = File.open("#{web_report_content_dir_path}/#{WebReport.generate_url_and_file_safe_repository_name(repo.name)}.md",'w') do |content_file|
+          content_file.write repo_hash.to_yaml
+          content_file.puts "---"
+          content_file.puts ""
+        end
+        @logger.debug("Wrote web report content file for '#{repo.name}'")
         data << repo_hash
       end
-      output_file = File.open(registry_yaml_file_path,'w')
-      output_file.write data.to_yaml
     rescue Exception => e
       @logger.error(e)
-    ensure
-      output_file.close unless (output_file == nil || output_file.closed?)
     end  
   end
   
@@ -86,13 +93,14 @@ class WebReport
       else
         data['harvest_datestamp'] = Time.now.strftime('%Y-%m-%d')
       end
-      output_file = File.open("#{web_report_data_dir_path}/#{WebReport.generate_url_and_file_safe_repository_name(repo.name)}.yaml",'w')
-      output_file.write data.to_yaml
+      # data_file = File.open("#{web_report_data_dir_path}/#{repo.id}.yaml",'w')
+      data_file = File.open("#{web_report_data_dir_path}/#{WebReport.generate_url_and_file_safe_repository_name(repo.name)}.json",'w')
+      data_file.write data.to_json
       @logger.debug("Wrote web report data file for '#{repo.name}'")
     rescue Exception => e
       @logger.error(e)
     ensure
-      output_file.close unless (output_file == nil || output_file.closed?)
+      data_file.close unless (data_file == nil || data_file.closed?)
     end
   end
   
@@ -118,7 +126,7 @@ class WebReport
         data << prop_hash
       end
       output_file = File.open(universal_validation_summary_by_property_report_file_path,'w')
-      output_file.write data.to_yaml
+      output_file.write data.to_json
     rescue Exception => e
       @logger.error(e)
     ensure
