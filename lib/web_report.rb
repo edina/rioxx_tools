@@ -24,6 +24,10 @@ class WebReport
         repo_hash['opendoar_id'] = repo.id
         repo_hash['software_name'] = repo.software_name
         repo_hash['software_version'] = repo.software_version
+        repo_hash['geoloc'] = {}
+        repo_hash['geoloc']['name'] = repo.name
+        repo_hash['geoloc']['latitude'] = repo.latitude
+        repo_hash['geoloc']['longitude'] = repo.longitude
         repo_hash['file_name'] = WebReport.generate_url_and_file_safe_repository_name(repo.name)
         repo_hash['sample_size'] = repo.repository_records.size
         repo_hash['validation_scheme_reports'] = {}

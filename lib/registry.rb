@@ -20,6 +20,8 @@ class Registry
         repo.name = element.find_first('rName').content
         repo.base_url = element.find_first('rOaiBaseUrl').content
         repo.software_name = element.find_first('rSoftWareName').content
+        repo.latitude = element.find_first('paLatitude').content
+        repo.longitude = element.find_first('paLongitude').content
         repo.software_version = element.find_first('rSoftWareVersion').content
         repo.save
         @logger.debug("Added repo '#{repo.name}' to registry")

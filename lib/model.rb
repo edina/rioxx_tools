@@ -10,6 +10,8 @@ class Repository
   property :base_url, URI
   property :software_name, String
   property :software_version, String
+  property :latitude, String
+  property :longitude, String
   property :harvested, DateTime
   property :error, Boolean, :default => false
   

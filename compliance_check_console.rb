@@ -68,10 +68,10 @@ if config.reset_all_data then
 end
 
 ### harvest sample set of records from each repository
-do_harvest(config,registry,harvester,metadata_format)
+# do_harvest(config,registry,harvester,metadata_format)
 
 ### clear out previous validation data and re-analyse collected sample records
-do_validation(metadata_format,logger)
+# do_validation(metadata_format,logger)
 
 ### generate web reports
 do_web_report(config,registry,metadata_format,logger)
