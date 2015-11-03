@@ -21,6 +21,7 @@ class WebReport
         repo_hash['draft'] = false
         repo_hash['date'] = Time.now.strftime('%Y-%m-%dT%H:%M:%S%:z')
         repo_hash['base_url'] = repo.base_url.to_s
+        repo_hash['repo_url'] = repo.repo_url.to_s
         repo_hash['opendoar_id'] = repo.id
         repo_hash['software_name'] = repo.software_name
         repo_hash['software_version'] = repo.software_version

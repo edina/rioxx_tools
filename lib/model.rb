@@ -8,6 +8,7 @@ class Repository
   property :id, Integer, :key => true
   property :name, String
   property :base_url, URI
+  property :repo_url, URI
   property :software_name, String
   property :software_version, String
   property :latitude, String

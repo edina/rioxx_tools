@@ -19,6 +19,7 @@ class Registry
         repo = Repository.new(:id => element.find_first('@rID').value)
         repo.name = element.find_first('rName').content
         repo.base_url = element.find_first('rOaiBaseUrl').content
+        repo.repo_url = element.find_first('rUrl').content
         repo.software_name = element.find_first('rSoftWareName').content
         repo.latitude = element.find_first('paLatitude').content
         repo.longitude = element.find_first('paLongitude').content
