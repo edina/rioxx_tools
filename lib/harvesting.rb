@@ -43,7 +43,7 @@ class OaiHarvester
     return harvest_count
   end
   
-  def harvest(repo,metadata_format,limit,fresh_harvest=true)
+  def harvest(repo,metadata_format,limit,from,fresh_harvest=true)
     @logger.info("Harvesting #{metadata_format.prefix} records from repo: '#{repo.name}'....")
     begin
       harvest_count = 0
@@ -54,7 +54,7 @@ class OaiHarvester
         end
       end
       client = OAI::Client.new(repo.base_url, :parser => XML_PARSER)
-      record_set = client.list_records(:metadata_prefix => metadata_format.prefix)
+      record_set = client.list_records(:metadata_prefix => metadata_format.prefix,:from => from)
       harvest_count = save_repository_record(record_set,metadata_format,repo,limit,harvest_count)
       resumption_token = record_set.resumption_token
       @logger.debug("Resumption token = #{resumption_token}")

@@ -24,7 +24,7 @@ end
 
 def do_harvest(config,registry,harvester,metadata_format)
   registry.repos_supporting_metadata_format(metadata_format.prefix).each do |repo|
-    harvester.harvest(repo,metadata_format,config.sample_harvest_size,true)
+    harvester.harvest(repo,metadata_format,config.sample_harvest_size,'2015-01-01',true)
   end
 end
 
